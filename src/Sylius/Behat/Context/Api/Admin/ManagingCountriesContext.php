@@ -40,7 +40,7 @@ final class ManagingCountriesContext implements Context
         ApiClientInterface $provincesClient,
         ResponseCheckerInterface $responseChecker,
         SharedStorageInterface $sharedStorage,
-        IriConverterInterface $iriConverter
+        IriConverterInterface $iriConverter,
     ) {
         $this->client = $client;
         $this->provincesClient = $provincesClient;
@@ -115,7 +115,7 @@ final class ManagingCountriesContext implements Context
     {
         $this->client->addSubResourceData(
             'provinces',
-            ['name' => $provinceName]
+            ['name' => $provinceName],
         );
     }
 
@@ -126,7 +126,7 @@ final class ManagingCountriesContext implements Context
     {
         $this->client->addSubResourceData(
             'provinces',
-            ['code' => $provinceCode]
+            ['code' => $provinceCode],
         );
     }
 
@@ -137,7 +137,7 @@ final class ManagingCountriesContext implements Context
     {
         $this->client->addSubResourceData(
             'provinces',
-            ['code' => $provinceCode, 'name' => $provinceName]
+            ['code' => $provinceCode, 'name' => $provinceName],
         );
     }
 
@@ -148,7 +148,7 @@ final class ManagingCountriesContext implements Context
     {
         $this->client->addSubResourceData(
             'provinces',
-            ['code' => $code, 'name' => $name, 'abbreviation' => $abbreviation]
+            ['code' => $code, 'name' => $name, 'abbreviation' => $abbreviation],
         );
     }
 
@@ -193,7 +193,7 @@ final class ManagingCountriesContext implements Context
     {
         Assert::true(
             $this->responseChecker->isCreationSuccessful($this->client->getLastResponse()),
-            'Country could not be created'
+            'Country could not be created',
         );
     }
 
@@ -204,7 +204,7 @@ final class ManagingCountriesContext implements Context
     {
         Assert::true(
             $this->responseChecker->hasItemWithValue($this->client->index(), 'code', $country->getCode()),
-            sprintf('There is no country with name "%s"', $country->getName())
+            sprintf('There is no country with name "%s"', $country->getName()),
         );
     }
 
@@ -217,7 +217,7 @@ final class ManagingCountriesContext implements Context
         Assert::true($this->responseChecker->hasItemWithValue(
             $this->client->subResourceIndex('provinces', $country->getCode()),
             'code',
-            $province->getCode()
+            $province->getCode(),
         ));
     }
 
@@ -241,7 +241,7 @@ final class ManagingCountriesContext implements Context
         Assert::true($this->responseChecker->hasItemWithValue(
             $this->client->subResourceIndex('provinces', $country->getCode()),
             'code',
-            $province->getCode()
+            $province->getCode(),
         ));
     }
 
@@ -254,7 +254,7 @@ final class ManagingCountriesContext implements Context
         $response = $this->client->create();
         Assert::false(
             $this->responseChecker->isCreationSuccessful($response),
-            'Country has been created successfully, but it should not'
+            'Country has been created successfully, but it should not',
         );
         Assert::same($this->responseChecker->getError($response), 'code: Country ISO code must be unique.');
     }
@@ -266,7 +266,7 @@ final class ManagingCountriesContext implements Context
     {
         Assert::true(
             $this->responseChecker->isUpdateSuccessful($this->client->getLastResponse()),
-            'Country could not be edited'
+            'Country could not be edited',
         );
     }
 
@@ -279,9 +279,9 @@ final class ManagingCountriesContext implements Context
             $this->responseChecker->hasValue(
                 $this->client->show($country->getCode()),
                 'enabled',
-                $enabled === 'enabled'
+                $enabled === 'enabled',
             ),
-            'Country is not disabled'
+            'Country is not disabled',
         );
     }
 
@@ -304,7 +304,7 @@ final class ManagingCountriesContext implements Context
         foreach ($this->getProvincesOfCountry($country) as $province) {
             Assert::false(
                 $province->getCode() === $provinceCode,
-                sprintf('The country "%s" should not have the "%s" province', $country->getName(), $province->getName())
+                sprintf('The country "%s" should not have the "%s" province', $country->getName(), $province->getName()),
             );
         }
     }
@@ -321,7 +321,7 @@ final class ManagingCountriesContext implements Context
         foreach ($this->getProvincesOfCountry($country) as $province) {
             Assert::false(
                 $province->getName() === $provinceName,
-                sprintf('The country "%s" should not have the "%s" province', $country->getName(), $province->getName())
+                sprintf('The country "%s" should not have the "%s" province', $country->getName(), $province->getName()),
             );
         }
     }
@@ -333,7 +333,7 @@ final class ManagingCountriesContext implements Context
     {
         Assert::same(
             $this->responseChecker->getError($this->client->getLastResponse()),
-            'provinces[1].code: Province code must be unique.'
+            'provinces[1].code: Province code must be unique.',
         );
     }
 
@@ -344,7 +344,7 @@ final class ManagingCountriesContext implements Context
     {
         Assert::contains(
             $this->responseChecker->getError($this->client->getLastResponse()),
-            \sprintf('Please enter province %s.', $field)
+            \sprintf('Please enter province %s.', $field),
         );
     }
 
@@ -355,7 +355,7 @@ final class ManagingCountriesContext implements Context
     {
         Assert::contains(
             $this->responseChecker->getError($this->provincesClient->getLastResponse()),
-            'Please enter province name.'
+            'Please enter province name.',
         );
     }
 
@@ -366,7 +366,7 @@ final class ManagingCountriesContext implements Context
     {
         Assert::contains(
             $this->responseChecker->getError($this->client->getLastResponse()),
-            'Cannot delete, the province is in use.'
+            'Cannot delete, the province is in use.',
         );
     }
 
@@ -376,7 +376,7 @@ final class ManagingCountriesContext implements Context
         Assert::keyExists(
             $countryList,
             $countryName,
-            sprintf('The country with name "%s" not found', $countryName)
+            sprintf('The country with name "%s" not found', $countryName),
         );
 
         return $countryList[$countryName];

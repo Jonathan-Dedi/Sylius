@@ -48,7 +48,7 @@ final class ManagingProductsContext implements Context
         ApiClientInterface $productReviewsClient,
         ResponseCheckerInterface $responseChecker,
         IriConverterInterface $iriConverter,
-        SharedStorageInterface $sharedStorage
+        SharedStorageInterface $sharedStorage,
     ) {
         $this->client = $client;
         $this->adminUsersClient = $adminUsersClient;
@@ -244,7 +244,7 @@ final class ManagingProductsContext implements Context
         $response = $this->client->index();
 
         Assert::true(
-            $this->responseChecker->hasItemWithTranslation($response, 'en_US', 'name', $productName)
+            $this->responseChecker->hasItemWithTranslation($response, 'en_US', 'name', $productName),
         );
     }
 
@@ -278,7 +278,7 @@ final class ManagingProductsContext implements Context
     {
         Assert::true(
             $this->responseChecker->isUpdateSuccessful($this->client->getLastResponse()),
-            'Product could not be edited'
+            'Product could not be edited',
         );
     }
 
@@ -289,7 +289,7 @@ final class ManagingProductsContext implements Context
     {
         Assert::false(
             $this->responseChecker->isDeletionSuccessful($this->client->getLastResponse()),
-            'Product can be deleted, but it should not'
+            'Product can be deleted, but it should not',
         );
     }
 
@@ -300,7 +300,7 @@ final class ManagingProductsContext implements Context
     {
         Assert::true(
             $this->responseChecker->isDeletionSuccessful($this->client->getLastResponse()),
-            'Product still exists, but it should not'
+            'Product still exists, but it should not',
         );
     }
 
@@ -311,7 +311,7 @@ final class ManagingProductsContext implements Context
     {
         Assert::contains(
             $this->responseChecker->getError($this->client->getLastResponse()),
-            sprintf('Please enter product %s.', $element)
+            sprintf('Please enter product %s.', $element),
         );
     }
 
@@ -322,7 +322,7 @@ final class ManagingProductsContext implements Context
     {
         Assert::contains(
             $this->responseChecker->getError($this->client->getLastResponse()),
-            'Product code must be unique.'
+            'Product code must be unique.',
         );
     }
 
@@ -341,7 +341,7 @@ final class ManagingProductsContext implements Context
     {
         Assert::true(
             $this->hasProductWithFieldValue($this->client->getLastResponse(), $field, $value),
-            sprintf('Product has not %s with %s', $field, $value)
+            sprintf('Product has not %s with %s', $field, $value),
         );
     }
 
@@ -354,7 +354,7 @@ final class ManagingProductsContext implements Context
             $this
                 ->responseChecker
                 ->hasItemWithTranslation($this->client->getLastResponse(), 'en_US', $field, $value),
-            sprintf('Product with %s set as %s still exists, but it should not', $field, $value)
+            sprintf('Product with %s set as %s still exists, but it should not', $field, $value),
         );
     }
 
@@ -372,9 +372,9 @@ final class ManagingProductsContext implements Context
                 $this->client->getLastResponse(),
                 0,
                 'code',
-                '/api/v2/admin/products/_NEW'
+                '/api/v2/admin/products/_NEW',
             ),
-            sprintf('It was possible to change %s', '_NEW')
+            sprintf('It was possible to change %s', '_NEW'),
         );
     }
 
@@ -400,7 +400,7 @@ final class ManagingProductsContext implements Context
 
         Assert::true(
             $this->responseChecker->hasTranslation($response, 'en_US', 'name', $name),
-            sprintf('Product\'s name %s does not exist', $name)
+            sprintf('Product\'s name %s does not exist', $name),
         );
     }
 
@@ -413,7 +413,7 @@ final class ManagingProductsContext implements Context
 
         Assert::false(
             $this->responseChecker->hasItemWithValue($response, 'code', $product->getCode()),
-            sprintf('Product with name %s still exists, but it should not', $product->getName())
+            sprintf('Product with name %s still exists, but it should not', $product->getName()),
         );
     }
 
@@ -428,7 +428,7 @@ final class ManagingProductsContext implements Context
 
         Assert::true(
             in_array($this->iriConverter->getIriFromItem($productOption), $productFromResponse['options'], true),
-            sprintf('Product with option %s does not exist', $productOption->getName())
+            sprintf('Product with option %s does not exist', $productOption->getName()),
         );
     }
 
@@ -452,7 +452,7 @@ final class ManagingProductsContext implements Context
 
         Assert::true(
             $this->responseChecker->hasTranslation($response, $localeCode, 'slug', $slug),
-            sprintf('Product\'s slug %s does not exist', $slug)
+            sprintf('Product\'s slug %s does not exist', $slug),
         );
     }
 
@@ -467,9 +467,9 @@ final class ManagingProductsContext implements Context
             $this->responseChecker->getCollectionItemsWithValue(
                 $response,
                 'reviewSubject',
-                $this->iriConverter->getIriFromItem($product)
+                $this->iriConverter->getIriFromItem($product),
             ),
-            'Should be no reviews, but some exist'
+            'Should be no reviews, but some exist',
         );
     }
 
@@ -483,7 +483,7 @@ final class ManagingProductsContext implements Context
 
         Assert::true(
             $this->responseChecker->hasItemWithValue($response, 'code', $code),
-            sprintf('Product with code %s does not exist', $code)
+            sprintf('Product with code %s does not exist', $code),
         );
     }
 

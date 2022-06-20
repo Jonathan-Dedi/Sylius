@@ -25,7 +25,7 @@ final class CurrencyContext implements Context
 
     public function __construct(
         ApiClientInterface $client,
-        ResponseCheckerInterface $responseChecker
+        ResponseCheckerInterface $responseChecker,
     ) {
         $this->client = $client;
         $this->responseChecker = $responseChecker;

@@ -54,7 +54,7 @@ final class LocaleContext implements Context
     {
         Assert::same(
             $this->responseChecker->countCollectionItems($this->client->getLastResponse()),
-            $count
+            $count,
         );
     }
 
@@ -64,7 +64,7 @@ final class LocaleContext implements Context
     public function theLocaleWithCodeShouldBeAvailable(string $name, string $code): void
     {
         Assert::true(
-            $this->responseChecker->hasItemWithValues($this->client->getLastResponse(), ['name' => $name, 'code' => $code])
+            $this->responseChecker->hasItemWithValues($this->client->getLastResponse(), ['name' => $name, 'code' => $code]),
         );
     }
 
@@ -74,7 +74,7 @@ final class LocaleContext implements Context
     public function theLocaleWithCodeShouldNotBeAvailable(string $name, string $code): void
     {
         Assert::false(
-            $this->responseChecker->hasItemWithValues($this->client->getLastResponse(), ['name' => $name, 'code' => $code])
+            $this->responseChecker->hasItemWithValues($this->client->getLastResponse(), ['name' => $name, 'code' => $code]),
         );
     }
 

@@ -30,7 +30,7 @@ final class PromotionContext implements Context
     public function __construct(
         ApiClientInterface $ordersClient,
         SharedStorageInterface $sharedStorage,
-        ResponseCheckerInterface $responseChecker
+        ResponseCheckerInterface $responseChecker,
     ) {
         $this->ordersClient = $ordersClient;
         $this->sharedStorage = $sharedStorage;

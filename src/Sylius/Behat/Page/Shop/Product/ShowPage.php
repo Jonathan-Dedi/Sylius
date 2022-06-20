@@ -340,7 +340,7 @@ class ShowPage extends SymfonyPage implements ShowPageInterface
 
         return array_map(
             fn (NodeElement $element) => $element->getText(),
-            $optionElement->findAll('css', 'option')
+            $optionElement->findAll('css', 'option'),
         );
     }
 

@@ -40,14 +40,14 @@ final class Request implements RequestInterface
         ?string $section,
         string $resource,
         string $authorizationHeader,
-        ?string $token = null
+        ?string $token = null,
     ): RequestInterface {
         $headers = $token ? ['HTTP_' . $authorizationHeader => 'Bearer ' . $token] : [];
 
         return new self(
             sprintf('/api/v2/%s%s', self::prepareSection($section), $resource),
             HttpRequest::METHOD_GET,
-            $headers
+            $headers,
         );
     }
 
@@ -55,7 +55,7 @@ final class Request implements RequestInterface
     {
         return new self(
             sprintf('/api/v2/%s%s/%s/%s', self::prepareSection($section), $resource, $id, $subResource),
-            HttpRequest::METHOD_GET
+            HttpRequest::METHOD_GET,
         );
     }
 
@@ -64,14 +64,14 @@ final class Request implements RequestInterface
         string $resource,
         string $id,
         string $authorizationHeader,
-        ?string $token = null
+        ?string $token = null,
     ): RequestInterface {
         $headers = $token ? ['HTTP_' . $authorizationHeader => 'Bearer ' . $token] : [];
 
         return new self(
             sprintf('/api/v2/%s%s/%s', self::prepareSection($section), $resource, $id),
             HttpRequest::METHOD_GET,
-            $headers
+            $headers,
         );
     }
 
@@ -79,7 +79,7 @@ final class Request implements RequestInterface
         ?string $section,
         string $resource,
         string $authorizationHeader,
-        ?string $token = null
+        ?string $token = null,
     ): RequestInterface {
         $headers = ['CONTENT_TYPE' => 'application/ld+json'];
         if ($token !== null) {
@@ -89,7 +89,7 @@ final class Request implements RequestInterface
         return new self(
             sprintf('/api/v2/%s%s', self::prepareSection($section), $resource),
             HttpRequest::METHOD_POST,
-            $headers
+            $headers,
         );
     }
 
@@ -98,7 +98,7 @@ final class Request implements RequestInterface
         string $resource,
         string $id,
         string $authorizationHeader,
-        ?string $token = null
+        ?string $token = null,
     ): RequestInterface {
         $headers = ['CONTENT_TYPE' => 'application/ld+json'];
         if ($token !== null) {
@@ -108,7 +108,7 @@ final class Request implements RequestInterface
         return new self(
             sprintf('/api/v2/%s%s/%s', self::prepareSection($section), $resource, $id),
             HttpRequest::METHOD_PUT,
-            $headers
+            $headers,
         );
     }
 
@@ -117,14 +117,14 @@ final class Request implements RequestInterface
         string $resource,
         string $id,
         string $authorizationHeader,
-        ?string $token = null
+        ?string $token = null,
     ): RequestInterface {
         $headers = $token ? ['HTTP_' . $authorizationHeader => 'Bearer ' . $token] : [];
 
         return new self(
             sprintf('/api/v2/%s%s/%s', self::prepareSection($section), $resource, $id),
             HttpRequest::METHOD_DELETE,
-            $headers
+            $headers,
         );
     }
 
@@ -138,7 +138,7 @@ final class Request implements RequestInterface
         return new self(
             sprintf('/api/v2/%s%s/%s/%s', self::prepareSection($section), $resource, $id, $action),
             $type,
-            ['CONTENT_TYPE' => self::resolveHttpMethod($type)]
+            ['CONTENT_TYPE' => self::resolveHttpMethod($type)],
         );
     }
 
@@ -146,7 +146,7 @@ final class Request implements RequestInterface
         ?string $section,
         string $resource,
         string $authorizationHeader,
-        ?string $token = null
+        ?string $token = null,
     ): RequestInterface {
         $headers = ['CONTENT_TYPE' => 'multipart/form-data'];
         if ($token !== null) {
@@ -156,7 +156,7 @@ final class Request implements RequestInterface
         return new self(
             sprintf('/api/v2/%s%s', self::prepareSection($section), $resource),
             HttpRequest::METHOD_POST,
-            $headers
+            $headers,
         );
     }
 
